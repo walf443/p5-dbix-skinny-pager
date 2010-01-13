@@ -1,27 +1,35 @@
-This is Perl module DBIx::Skinny::Pager.
+NAME
+    DBIx::Skinny::Pager -
 
-INSTALLATION
+SYNOPSIS
+      package Proj::DB;
+      use DBIx::Skinny;
+      use DBIx::Skinny::Mixin modules => ['Pager::Logic::MYSQLFoundRows'];
 
-DBIx::Skinny::Pager installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+      package main;
+      use Proj::DB;
 
-    % cpan DBIx::Skinny::Pager
+      my $rs = Proj::DB->resultset_with_pager;
+      # $rs can handle like DBIx::Skinny::SQL.
+      $rs->from('some_table');
+      $rs->add_where('foo' => 'bar');
+      $rs->limit(10);
+      $rs->offset(20);
+      my ($iter, $pager) = $rs->retrieve;
+      # $iter is a DBIx::Skinny::Iterator
+      # $pager is a Data::Page
 
-Download it, unpack it, then build it as per the usual:
+DESCRIPTION
+    DBIx::Skinny::Pager is resultset pager interface for DBIx::Skinny. This
+    module is not support for search_by_sql or search_named.
 
-    % perl Makefile.PL
-    % make && make test
+    XXX: THIS PROJECT IS EARLY DEVELOPMENT. API may change in future.
 
-Then install it:
+AUTHOR
+    Keiji Yoshimi <walf443 at gmail dot com>
 
-    % make install
+SEE ALSO
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
 
-DOCUMENTATION
-
-DBIx::Skinny::Pager documentation is available as in POD. So you can do:
-
-    % perldoc DBIx::Skinny::Pager
-
-to read the documentation online with your favorite pager.
-
-Keiji Yoshimi
