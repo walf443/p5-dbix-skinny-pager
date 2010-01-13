@@ -3,30 +3,8 @@ package DBIx::Skinny::Pager;
 use strict;
 use warnings;
 use base 'DBIx::Skinny::SQL';
-use Data::Page;
-use Carp ();
 
 our $VERSION = '0.01';
-
-sub as_sql {
-    my $self = shift;
-    my $result = $self->SUPER::as_sql;
-    # TODO: 正規表現もいいかげんなのでもうちょいちゃんとやりたい
-    # as_sqlの中身をいじるのは本家への追従を考えると難しそう
-    $result =~ s/SELECT /SELECT SQL_CALC_FOUND_ROWS/; # mysql support only
-}
-
-sub retrieve {
-    my $self = shift;
-    Carp::croak("limit not found") unless defined($self->limit);
-    Carp::croak("offset not found") unless defined($self->offset);
-
-    my $iter = $self->SUPER::retrieve(@_);
-    my $rows = $self->skinny->search_by_sql(q{SELECT FOUND_ROWS() AS row})->first;
-    my $pager = Data::Page->new($rows->row, $self->limit, ( $self->offset / $self->limit) + 1);
-    return ( $iter, $pager );
-}
-
 
 1;
 __END__
