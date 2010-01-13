@@ -17,7 +17,7 @@ DBIx::Skinny::Pager -
 
   package Proj::DB;
   use DBIx::Skinny;
-  use DBIx::Skinny::Mixin modules => ['Pager::MySQL'];
+  use DBIx::Skinny::Mixin modules => ['Pager::Logic::MYSQLFoundRows'];
 
   package main;
   use Proj::DB;
