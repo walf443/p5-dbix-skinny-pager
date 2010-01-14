@@ -1,4 +1,4 @@
-package DBIx::Skinny::Pager::Logic::MYSQLFoundRows;
+package DBIx::Skinny::Pager::Logic::MySQLFoundRows;
 use strict;
 use warnings;
 use base qw/DBIx::Skinny::Pager/;
@@ -33,7 +33,7 @@ DBIx::Skinny::Pager -
 
   package Proj::DB;
   use DBIx::Skinny;
-  use DBIx::Skinny::Mixin modules => ['Pager::Logic::MYSQLFoundRows'];
+  use DBIx::Skinny::Mixin modules => ['Pager::Logic::MySQLFoundRows'];
 
   package main;
   use Proj::DB;
@@ -50,7 +50,7 @@ DBIx::Skinny::Pager -
 
 =head1 DESCRIPTION
 
-DBIx::Skinny::Pager::Logic::MYSQLFoundRows is supported mysql only.
+DBIx::Skinny::Pager::Logic::MySQLFoundRows is supported mysql only.
 
 =head1 AUTHOR
 
