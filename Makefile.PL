@@ -7,7 +7,7 @@ readme_from 'lib/DBIx/Skinny/Pager.pm';
 
 # requires '';
 
-tests 't/*.t';
+tests 't/*.t t/**/*.t';
 author_tests 'xt';
 
 requires 'DBIx::Skinny';
