@@ -8,7 +8,8 @@ sub as_sql {
     my $result = $self->SUPER::as_sql;
     # TODO: 正規表現もいいかげんなのでもうちょいちゃんとやりたい
     # as_sqlの中身をいじるのは本家への追従を考えると難しそう
-    $result =~ s/SELECT /SELECT SQL_CALC_FOUND_ROWS/; # mysql support only
+    $result =~ s/SELECT /SELECT SQL_CALC_FOUND_ROWS /; # mysql support only
+    $result;
 }
 
 sub retrieve {
