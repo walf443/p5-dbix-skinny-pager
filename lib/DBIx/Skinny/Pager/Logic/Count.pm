@@ -45,7 +45,7 @@ DBIx::Skinny::Pager::Logic::Count
 
 =head1 DESCRIPTION
 
-DBIx::Skinny::Pager::Logic::Count is
+DBIx::Skinny::Pager::Logic::Count is most normal logic.
 
 =head1 AUTHOR
 
