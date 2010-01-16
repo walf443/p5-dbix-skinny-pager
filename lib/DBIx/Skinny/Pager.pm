@@ -82,6 +82,8 @@ Keiji Yoshimi E<lt>walf443 at gmail dot comE<gt>
 
 =head1 SEE ALSO
 
++<DBIx::Skinny>, +<DBIx::Skinny::SQL>, +<DBIx::Skinny::Mixin>, +<Data::Page>
+
 =head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify
