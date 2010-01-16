@@ -7,14 +7,7 @@ use Data::Page;
 
 our $VERSION = '0.01';
 
-sub page {
-    my ($self, $arg) = @_;
-    if ( $arg ) {
-        $self->{page} = $arg;
-    } else {
-        $self->{page};
-    }
-}
+__PACKAGE__->mk_accessors(qw(page));
 
 sub get_total_entries {
     die "please override";
