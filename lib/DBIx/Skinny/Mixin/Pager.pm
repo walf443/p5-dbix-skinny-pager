@@ -1,6 +1,7 @@
 package DBIx::Skinny::Mixin::Pager;
 use strict;
 use warnings;
+use UNIVERSAL::require;
 
 sub register_method {
     +{
@@ -10,12 +11,13 @@ sub register_method {
 
 # see also DBIx::Skinny#resultset
 sub resultset_with_pager {
-    my ($class, $args) = @_;
+    my ($class, $logic, $args) = @_;
+    my $logic_class = "DBIx::Skinny::Pager::Logic::$logic";
+    $logic_class->require
+        or die $@;
     $args->{skinny} = $class;
-    $class->pager_class->new($args);
+    $logic_class->new($args);
 }
-
-sub pager_class { die "please override" }
 
 1;
 __END__
@@ -28,21 +30,18 @@ DBIx::Skinny::Mixin::Pager
 
   package Proj::DB;
   use DBIx::Skinny;
-  use DBIx::Skinny::Mixin modules => ['Pager::Logic::MySQLFoundRows'];
+  use DBIx::Skinny::Mixin modules => ['Pager'];
 
   package main;
   use Proj::DB;
 
-  my $rs = Proj::DB->resultset_with_pager;
+  my $rs = Proj::DB->resultset_with_pager('MySQLFoundRows');
   # $rs is DBIx::Skinny::Pager::Logic::MySQLFoundRows
 
 =head1 DESCRIPTION
 
 DBIx::Skinny::Mixin::Pager is a interface for mixin resultset_with_pager method to DBIx::Skinny.
 resultset_with_pager return DBIx::Skinny::Pager object.
-
-If you mixin "DBIx::Skinny::Mixin::Pager::Logic::MySQLFoundRows" to DBIx::Skinny, 
-resultset_with_pager return DBIx::Skinny::Pager::Logic::MySQLFoundRows object.
 
 =head1 AUTHOR
 
