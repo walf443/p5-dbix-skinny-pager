@@ -45,7 +45,7 @@ DBIx::Skinny::Pager -
 
   my $rs = Proj::DB->resultset_with_pager('MySQLFoundRows');
   # $rs can handle like DBIx::Skinny::SQL.
-  $rs->from('some_table');
+  $rs->from(['some_table']);
   $rs->add_where('foo' => 'bar');
   $rs->limit(10);
   $rs->offset(20);
@@ -56,7 +56,7 @@ DBIx::Skinny::Pager -
 
   # or you can set page
   my $rs2 = Proj::DB->resultset_with_pager;
-  $rs2->from('some_table');
+  $rs2->from(['some_table']);
   $rs2->add_where('foo' => 'bar');
   $rs2->limit(10);
   $rs2->page(2); # offset is 10 * ( 2 - 1) = 10.

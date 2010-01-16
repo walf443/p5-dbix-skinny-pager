@@ -46,7 +46,7 @@ DBIx::Skinny::Pager::Logic::PlusOne
 
   my $rs = Proj::DB->resultset_with_pager('PlusOne');
   # $rs can handle like DBIx::Skinny::SQL.
-  $rs->from('some_table');
+  $rs->from(['some_table']);
   $rs->add_where('foo' => 'bar');
   $rs->limit(10);
   $rs->offset(20);

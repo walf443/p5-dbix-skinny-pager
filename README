@@ -11,7 +11,7 @@ SYNOPSIS
 
       my $rs = Proj::DB->resultset_with_pager('MySQLFoundRows');
       # $rs can handle like DBIx::Skinny::SQL.
-      $rs->from('some_table');
+      $rs->from(['some_table']);
       $rs->add_where('foo' => 'bar');
       $rs->limit(10);
       $rs->offset(20);
@@ -22,7 +22,7 @@ SYNOPSIS
 
       # or you can set page
       my $rs2 = Proj::DB->resultset_with_pager;
-      $rs2->from('some_table');
+      $rs2->from(['some_table']);
       $rs2->add_where('foo' => 'bar');
       $rs2->limit(10);
       $rs2->page(2); # offset is 10 * ( 2 - 1) = 10.
@@ -32,6 +32,8 @@ SYNOPSIS
 DESCRIPTION
     DBIx::Skinny::Pager is resultset pager interface for DBIx::Skinny. This
     module is not support for search_by_sql or search_named.
+
+    and This modele is not support Oracle connection.
 
     XXX: THIS PROJECT IS EARLY DEVELOPMENT. API may change in future.
 
