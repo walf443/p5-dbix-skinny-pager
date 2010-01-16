@@ -68,6 +68,8 @@ DBIx::Skinny::Pager -
 DBIx::Skinny::Pager is resultset pager interface for DBIx::Skinny.
 This module is not support for search_by_sql or search_named.
 
+and This modele is not support Oracle connection.
+
 XXX: THIS PROJECT IS EARLY DEVELOPMENT. API may change in future.
 
 =head1 AUTHOR
