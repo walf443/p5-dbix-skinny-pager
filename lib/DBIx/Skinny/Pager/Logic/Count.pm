@@ -16,7 +16,7 @@ sub get_total_entries {
     my $new_iter = $rs->retrieve;
     if ( $rs->group && ( ref $rs->group eq 'ARRAY' && @{ $rs->group } ) ) {
         # are there better way?
-        $new_iter->count;
+        return $new_iter->count;
     } else {
         return $new_iter->first->cnt;
     }
