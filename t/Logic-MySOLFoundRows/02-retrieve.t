@@ -63,6 +63,8 @@ use Data::Dumper;
 use DBIx::Skinny::Pager::Logic::MySQLFoundRows;
 
 {
+    my $test_name = "normal case";
+
     my $stub = Stub::DBIx::Skinny->new;
     my $rs = DBIx::Skinny::Pager::Logic::MySQLFoundRows->new({ skinny => $stub });
     $rs->from(['some_table']);
@@ -73,15 +75,41 @@ use DBIx::Skinny::Pager::Logic::MySQLFoundRows;
     $rs->select([qw(foo bar baz)]);
     my ($iter, $pager) = $rs->retrieve;
     
-    is(@{$stub->log}, 2, "execute query 2 times")
+    is(@{$stub->log}, 2, "$test_name: execute query 2 times")
         or diag(Dumper($stub->log));
-    like($stub->log->[0], qr/SQL_CALC_FOUND_ROWS/, "first query should contain SQL_CALC_FOUND_ROWS");
-    like($stub->log->[1], qr/FOUND_ROWS\(\)/, "second query should contain FOUND_ROWS()");
+    like($stub->log->[0], qr/SQL_CALC_FOUND_ROWS/, "$test_name: first query should contain SQL_CALC_FOUND_ROWS");
+    like($stub->log->[1], qr/FOUND_ROWS\(\)/, "$test_name: second query should contain FOUND_ROWS()");
 
     isa_ok($pager, "Data::Page");
-    is($pager->total_entries, Dummy::DBIx::Skinny::Row->row, "shoud same as Dummy::DBIx::Skinny::Row#row");
-    is($pager->entries_per_page, $limit, "should same as limit argument");
+    is($pager->total_entries, Dummy::DBIx::Skinny::Row->row, "$test_name: shoud same as Dummy::DBIx::Skinny::Row#row");
+    is($pager->entries_per_page, $limit, "$test_name: should same as limit argument");
     is($pager->current_page, 3);
+}
+
+{
+    my $test_name = "use with page";
+
+    my $stub = Stub::DBIx::Skinny->new;
+    my $rs = DBIx::Skinny::Pager::Logic::MySQLFoundRows->new({ skinny => $stub });
+    $rs->from(['some_table']);
+    $rs->add_where(foo => "bar");
+    my $limit = 10;
+    $rs->limit($limit);
+    my $page = 5;
+    $rs->page(5);
+    $rs->select([qw(foo bar baz)]);
+    my ($iter, $pager) = $rs->retrieve;
+    
+    is(@{$stub->log}, 2, "$test_name: execute query 2 times")
+        or diag(Dumper($stub->log));
+    like($stub->log->[0], qr/SQL_CALC_FOUND_ROWS/, "$test_name: first query should contain SQL_CALC_FOUND_ROWS");
+    like($stub->log->[0], qr/OFFSET @{[ ($page-1) * $limit ]}/, "$test_name: first query should contain offset");
+    like($stub->log->[1], qr/FOUND_ROWS\(\)/, "$test_name: second query should contain FOUND_ROWS()");
+
+    isa_ok($pager, "Data::Page");
+    is($pager->total_entries, Dummy::DBIx::Skinny::Row->row, "$test_name: shoud same as Dummy::DBIx::Skinny::Row#row");
+    is($pager->entries_per_page, $limit, "$test_name: should same as limit argument");
+    is($pager->current_page, $page, "$test_name: should same as page argument");
 }
 
 done_testing();

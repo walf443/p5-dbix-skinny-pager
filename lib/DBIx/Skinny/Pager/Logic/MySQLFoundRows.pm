@@ -2,6 +2,7 @@ package DBIx::Skinny::Pager::Logic::MySQLFoundRows;
 use strict;
 use warnings;
 use base qw/DBIx::Skinny::Pager/;
+use Data::Page;
 
 sub as_sql {
     my $self = shift;
@@ -12,15 +13,9 @@ sub as_sql {
     $result;
 }
 
-sub retrieve {
+sub get_total_entries {
     my $self = shift;
-    Carp::croak("limit not found") unless defined($self->limit);
-    Carp::croak("offset not found") unless defined($self->offset);
-
-    my $iter = $self->SUPER::retrieve(@_);
-    my $rows = $self->skinny->search_by_sql(q{SELECT FOUND_ROWS() AS row})->first;
-    my $pager = Data::Page->new($rows->row, $self->limit, ( $self->offset / $self->limit) + 1);
-    return ( $iter, $pager );
+    $self->skinny->search_by_sql(q{SELECT FOUND_ROWS() AS row})->first->row;
 }
 
 1;

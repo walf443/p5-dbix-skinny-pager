@@ -6,6 +6,33 @@ use base 'DBIx::Skinny::SQL';
 
 our $VERSION = '0.01';
 
+sub page {
+    my ($self, $arg) = @_;
+    if ( $arg ) {
+        $self->{page} = $arg;
+    } else {
+        $self->{page};
+    }
+}
+
+sub get_total_entries {
+    die "please override";
+}
+
+sub retrieve {
+    my $self = shift;
+    Carp::croak("limit not found") unless defined($self->limit);
+    unless ( defined($self->offset) ) {
+        Carp::croak("limit or page not found") unless defined($self->page);
+        $self->offset($self->limit * ( $self->page - 1) );
+    }
+
+    my $iter = $self->SUPER::retrieve(@_);
+    my $total_entries = $self->get_total_entries($iter);
+    my $pager = Data::Page->new($total_entries, $self->limit, ( $self->offset / $self->limit) + 1);
+    return ( $iter, $pager );
+}
+
 1;
 __END__
 
