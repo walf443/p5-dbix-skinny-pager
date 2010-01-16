@@ -5,7 +5,7 @@ use UNIVERSAL::require;
 
 sub register_method {
     +{
-        'resultset_with_pager' => &resultset_with_pager,
+        'resultset_with_pager' => \&resultset_with_pager,
     },
 }
 
