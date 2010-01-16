@@ -52,7 +52,7 @@ SKIP: {
             my $test_name = "$logic_class: with where";
 
             my $rs = $skinny->resultset_with_pager($logic_class, {
-                page => 1,
+                page => 4,
                 limit => 3,
             });
             isa_ok($rs, "DBIx::Skinny::Pager::Logic::$logic_class");
@@ -62,18 +62,18 @@ SKIP: {
             my ($iter, $pager) = $rs->retrieve;
 
             if ( $logic_class eq "PlusOne" ) {
-                is($pager->total_entries, 3 + 1, "$test_name: total_entries");
+                is($pager->total_entries, 3 * (3 + 1) + 0, "$test_name: total_entries");
             } else {
                 is($pager->total_entries, 10, "$test_name: total_entries");
             }
-            is($pager->current_page, 1, "$test_name: current_page");
+            is($pager->current_page, 4, "$test_name: current_page");
             is($pager->entries_per_page, 3, "$test_name: entries_per_page");
-            is($iter->count, 3, "$test_name: iterator item count");
+            is($iter->count, 1, "$test_name: iterator item count");
             my $last_row;
             while ( my $row = $iter->next ) {
                 $last_row = $row;
             }
-            is($last_row->name, 3 - 1, "$test_name: last item name");
+            is($last_row->name, 9, "$test_name: last item name");
         }
     }
 
