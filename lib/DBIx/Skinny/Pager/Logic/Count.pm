@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use base qw/DBIx::Skinny::Pager/;
 use Data::Page;
+use DBIx::Skinny::SQL;
 
 sub get_total_entries {
     my ($self, $iter) = @_;
