@@ -13,8 +13,12 @@ sub get_total_entries {
     my $rs = DBIx::Skinny::SQL->new(\%hash);
     $rs->add_select("COUNT(*)" => 'cnt');
     my $new_iter = $rs->retrieve;
-    # TODO: group byの場合はこれだとダメなはず
-    return $new_iter->first->cnt;
+    if ( $rs->group && ( ref $rs->group eq 'ARRAY' && @{ $rs->group } ) ) {
+        # are there better way?
+        $new_iter->count;
+    } else {
+        return $new_iter->first->cnt;
+    }
 }
 
 1;
