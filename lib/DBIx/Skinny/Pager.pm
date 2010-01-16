@@ -55,9 +55,19 @@ DBIx::Skinny::Pager -
   $rs->add_where('foo' => 'bar');
   $rs->limit(10);
   $rs->offset(20);
+  $rs->select([qw(foo bar baz)]);
   my ($iter, $pager) = $rs->retrieve;
   # $iter is a DBIx::Skinny::Iterator
   # $pager is a Data::Page
+
+  # or you can set page
+  my $rs2 = Proj::DB->resultset_with_pager;
+  $rs2->from('some_table');
+  $rs2->add_where('foo' => 'bar');
+  $rs2->limit(10);
+  $rs2->page(2); # offset is 10 * ( 2 - 1) = 10.
+  $rs2->select([qw(foo bar baz)]);
+  my ($iter, $pager) = $rs2->retrieve;
 
 =head1 DESCRIPTION
 
