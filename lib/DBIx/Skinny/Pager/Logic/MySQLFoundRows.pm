@@ -23,7 +23,7 @@ __END__
 
 =head1 NAME
 
-DBIx::Skinny::Pager -
+DBIx::Skinny::Pager::Logic::MySQLFoundRows
 
 =head1 SYNOPSIS
 
