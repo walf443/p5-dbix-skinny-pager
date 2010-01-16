@@ -3,6 +3,7 @@ package DBIx::Skinny::Pager;
 use strict;
 use warnings;
 use base 'DBIx::Skinny::SQL';
+use Data::Page;
 
 our $VERSION = '0.01';
 
