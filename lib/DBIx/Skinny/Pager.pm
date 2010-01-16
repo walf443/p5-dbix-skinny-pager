@@ -44,12 +44,12 @@ DBIx::Skinny::Pager -
 
   package Proj::DB;
   use DBIx::Skinny;
-  use DBIx::Skinny::Mixin modules => ['Pager::Logic::MySQLFoundRows'];
+  use DBIx::Skinny::Mixin modules => ['Pager'];
 
   package main;
   use Proj::DB;
 
-  my $rs = Proj::DB->resultset_with_pager;
+  my $rs = Proj::DB->resultset_with_pager('MySQLFoundRows');
   # $rs can handle like DBIx::Skinny::SQL.
   $rs->from('some_table');
   $rs->add_where('foo' => 'bar');
