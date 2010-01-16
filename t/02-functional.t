@@ -76,6 +76,11 @@ SKIP: {
             is($last_row->name, 9, "$test_name: last item name");
         }
     }
+    
+    if ( $skinny->profiler ) {
+        require Data::Dumper;
+        warn Data::Dumper::Dumper($skinny->profiler)
+    }
 
     $skinny->cleanup_test_db;
 }
