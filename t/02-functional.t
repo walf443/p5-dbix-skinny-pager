@@ -20,7 +20,7 @@ SKIP: {
     }
     $skinny->bulk_insert('mock_basic_mysql', \@insert_data);
 
-    for my $logic_class ( qw(MySQLFoundRows PlusOne) ) {
+    for my $logic_class ( qw(MySQLFoundRows PlusOne Count) ) {
         {
             my $test_name = "$logic_class: normal case";
 
