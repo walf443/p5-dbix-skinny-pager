@@ -2,7 +2,7 @@ package DBIx::Skinny::Pager::Logic::PlusOne;
 use strict;
 use warnings;
 use base qw(DBIx::Skinny::Pager);
-use DBIx::Skinny::Pager::Page::Simple;
+use DBIx::Skinny::Pager::Page::PlusOne;
 
 sub as_sql {
     my $self = shift;
@@ -14,7 +14,7 @@ sub as_sql {
 }
 
 sub pager_class {
-    "DBIx::Skinny::Pager::Page::Simple";
+    "DBIx::Skinny::Pager::Page::PlusOne";
 }
 
 sub get_total_entries {
@@ -57,7 +57,7 @@ DBIx::Skinny::Pager::Logic::PlusOne
   $rs->offset(20);
   my ($iter, $pager) = $rs->retrieve;
   # $iter is a DBIx::Skinny::Iterator
-  # $pager is a DBIx::Skinny::Pager::Page::Simple.
+  # $pager is a DBIx::Skinny::Pager::Page::PlusOne.
 
 =head1 DESCRIPTION
 
