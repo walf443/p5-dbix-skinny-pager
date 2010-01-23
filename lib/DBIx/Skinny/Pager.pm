@@ -3,7 +3,7 @@ package DBIx::Skinny::Pager;
 use strict;
 use warnings;
 use base 'DBIx::Skinny::SQL';
-use Data::Page;
+use DBIx::Skinny::Pager::Page;
 
 our $VERSION = '0.01';
 
@@ -11,6 +11,10 @@ __PACKAGE__->mk_accessors(qw(page));
 
 sub get_total_entries {
     die "please override";
+}
+
+sub pager_class {
+    "DBIx::Skinny::Pager::Page";
 }
 
 sub retrieve {
@@ -23,7 +27,7 @@ sub retrieve {
 
     my $iter = $self->SUPER::retrieve(@_);
     my $total_entries = $self->get_total_entries($iter);
-    my $pager = Data::Page->new($total_entries, $self->limit, ( $self->offset / $self->limit) + 1);
+    my $pager = $self->pager_class->new($total_entries, $self->limit, ( $self->offset / $self->limit) + 1);
     return ( $iter, $pager );
 }
 

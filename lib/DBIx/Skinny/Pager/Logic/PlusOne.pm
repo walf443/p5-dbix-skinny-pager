@@ -2,6 +2,7 @@ package DBIx::Skinny::Pager::Logic::PlusOne;
 use strict;
 use warnings;
 use base qw(DBIx::Skinny::Pager);
+use DBIx::Skinny::Pager::Page::Simple;
 
 sub as_sql {
     my $self = shift;
@@ -10,6 +11,10 @@ sub as_sql {
     my $result = $self->SUPER::as_sql;
     $self->limit($original_limit);
     return $result;
+}
+
+sub pager_class {
+    "DBIx::Skinny::Pager::Page::Simple";
 }
 
 sub get_total_entries {
@@ -52,13 +57,13 @@ DBIx::Skinny::Pager::Logic::PlusOne
   $rs->offset(20);
   my ($iter, $pager) = $rs->retrieve;
   # $iter is a DBIx::Skinny::Iterator
-  # $pager is a Data::Page
+  # $pager is a DBIx::Skinny::Pager::Page::Simple.
 
 =head1 DESCRIPTION
 
 DBIx::Skinny::Pager::Logic::PlusOne will take limit + 1 record and you can decide next page is exist or not.
 This logic is good at performance.
-But, you can't know total records.
+But, you can't know total records. So, if you want to switch view speedy, see pager class.
 
 =head1 AUTHOR
 
