@@ -1,5 +1,6 @@
+sub readme_from { warn "Module::Install::ReadmeFromPod is not installed?" }
+
 use inc::Module::Install;
-use Module::Install::ReadmeFromPod;
 
 name 'DBIx-Skinny-Pager';
 all_from 'lib/DBIx/Skinny/Pager.pm';
@@ -17,5 +18,6 @@ requires 'Carp';
 build_requires 'Test::LoadAllModules';
 build_requires 'Module::Install::ReadmeFromPod';
 use_test_base;
+
 auto_include;
 WriteAll;
