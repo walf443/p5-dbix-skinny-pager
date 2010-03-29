@@ -112,5 +112,24 @@ use DBIx::Skinny::Pager::Logic::MySQLFoundRows;
     is($pager->current_page, $page, "$test_name: should same as page argument");
 }
 
+{
+    my $test_name = "with resultset";
+
+    my $stub = Stub::DBIx::Skinny->new;
+    my $rs = DBIx::Skinny::Pager::Logic::MySQLFoundRows->new({ skinny => $stub });
+    $rs->from(['some_table']);
+    $rs->add_where(foo => "bar");
+    my $limit = 10;
+    $rs->limit($limit);
+    my $page = 5;
+    $rs->page(5);
+    $rs->select([qw(foo bar baz)]);
+    my $resultset = $rs->retrieve;
+    
+    isa_ok($resultset, "DBIx::Skinny::Pager::ResultSet");
+    isa_ok($resultset->pager, "Data::Page");
+    isa_ok($resultset->iterator, "Dummy::DBIx::Skinny::Iterator");
+}
+
 done_testing();
 

@@ -103,6 +103,23 @@ SKIP: {
             is($last_row->name, 10 - 1, "$test_name: last item name");
         }
 
+        {
+            my $test_name = "$logic_class: with resultset";
+
+            my $rs = $skinny->resultset_with_pager($logic_class, {
+                page => 1,
+                limit => 10,
+            });
+            $rs->from(['mock_basic_mysql']);
+            $rs->group({ column => 'id' });
+            $rs->select(['name']);
+            my $resultset = $rs->retrieve;
+            isa_ok($resultset, "DBIx::Skinny::Pager::ResultSet");
+            isa_ok($resultset->pager, "Data::Page");
+            isa_ok($resultset->iterator, "DBIx::Skinny::Iterator");
+
+        }
+
     }
     
     if ( $skinny->profiler ) {

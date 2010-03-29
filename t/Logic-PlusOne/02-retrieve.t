@@ -99,5 +99,30 @@ use DBIx::Skinny::Pager::Logic::PlusOne;
 
 }
 
+{
+    my $stub = Stub::DBIx::Skinny->new;
+    my $rs = DBIx::Skinny::Pager::Logic::PlusOne->new({ skinny => $stub });
+    $rs->from(['some_table']);
+    $rs->add_where(foo => "bar");
+    my $limit = 10;
+    $rs->limit($limit);
+    $rs->offset(20);
+    $rs->select([qw(foo bar baz)]);
+
+    my $counter = $limit + 1;
+    my @iterator;
+    while ( $counter ) {
+        push(@iterator, {
+            id => ($limit - $counter + 1),
+        });
+        $counter--;
+    }
+    $stub->set_iterator(\@iterator);
+    my $resultset = $rs->retrieve;
+    isa_ok($resultset->pager, "Data::Page");
+    isa_ok($resultset->iterator, "DBIx::Skinny::Iterator");
+
+}
+
 done_testing();
 

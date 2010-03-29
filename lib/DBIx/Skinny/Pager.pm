@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use base 'DBIx::Skinny::SQL';
 use DBIx::Skinny::Pager::Page;
+use DBIx::Skinny::Pager::ResultSet;
 
 our $VERSION = '0.01';
 
@@ -28,7 +29,15 @@ sub retrieve {
     my $iter = $self->SUPER::retrieve(@_);
     my $total_entries = $self->get_total_entries($iter);
     my $pager = $self->pager_class->new($total_entries, $self->limit, ( $self->offset / $self->limit) + 1);
-    return ( $iter, $pager );
+
+    if ( wantarray ) {
+        return ( $iter, $pager );
+    } else {
+        return DBIx::Skinny::Pager::ResultSet->new(
+            iterator => $iter,
+            pager    => $pager,
+        );
+    }
 }
 
 1;
