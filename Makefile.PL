@@ -21,4 +21,5 @@ build_requires 'Module::Install::ReadmeFromPod';
 use_test_base;
 
 auto_include;
+auto_set_repository;
 WriteAll;
