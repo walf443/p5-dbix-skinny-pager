@@ -1,4 +1,7 @@
 Revision history for Perl extension DBIx::Skinny::Pager
 
+0.02    Mon Apr  5 01:48:40 JST 2010
+        - added DBIx::Skinny::Pager::Page to_hash method.
+        - DBIx::Skinny::Pager return DBIx::Skinny::Pager::ResultSet object if not wantarry.
 0.01    Thu Jan 14 00:51:40 2010
         - original version
