@@ -17,6 +17,7 @@ requires 'Data::Page';
 requires 'Carp';
 
 build_requires 'Test::LoadAllModules';
+build_requires 'Test::Deep';
 build_requires 'Test::Differences';
 build_requires 'Module::Install::ReadmeFromPod';
 build_requires 'Module::Install::Repository';
