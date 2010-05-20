@@ -120,6 +120,24 @@ SKIP: {
 
         }
 
+
+        {
+            my $test_name = "$logic_class: with resultset";
+
+            my $rs = $skinny->resultset_with_pager($logic_class, {
+                page => 'aiueo',
+                limit => 10,
+            });
+            $rs->from(['mock_basic_mysql']);
+            $rs->group({ column => 'id' });
+            $rs->select(['name']);
+            my $resultset = $rs->retrieve;
+            isa_ok($resultset, "DBIx::Skinny::Pager::ResultSet");
+            isa_ok($resultset->pager, "Data::Page");
+            isa_ok($resultset->iterator, "DBIx::Skinny::Iterator");
+
+        }
+
     }
     
     if ( $skinny->profiler ) {

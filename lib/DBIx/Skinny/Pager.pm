@@ -23,7 +23,7 @@ sub retrieve {
     Carp::croak("limit not found") unless defined($self->limit);
     unless ( defined($self->offset) ) {
         Carp::croak("limit or page not found") unless defined($self->page);
-        $self->offset($self->limit * ( $self->page - 1) );
+        $self->offset($self->limit * ( (int($self->page) || 1) - 1) );
     }
 
     my $iter = $self->SUPER::retrieve(@_);
