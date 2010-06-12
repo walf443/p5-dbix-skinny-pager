@@ -10,10 +10,10 @@ sub register_method {
 }
 
 sub search_with_pager {
-    my ($class, $where_cnd, $option_cnd, ) = @_;
+    my ($class, $table, $where_cnd, $option_cnd, ) = @_;
     my $pager_logic = delete $option_cnd->{pager_logic};
     my $page = delete $option_cnd->{page};
-    my $rs = $class->search_rs($where_cnd, $option_cnd);
+    my $rs = $class->search_rs($table, $where_cnd, $option_cnd);
     my $logic_class = "DBIx::Skinny::Pager::Logic::$pager_logic";
     $logic_class->require
         or die $@;
@@ -43,6 +43,7 @@ DBIx::Skinny::Mixin::SearchWithPager
         foo => "bar",
     }, {
         page => 1,
+        limit => 10,
         pager_logic => "MySQLFoundRows",
     });
 

@@ -1,6 +1,6 @@
 package Mock::BasicMySQL;
 use DBIx::Skinny setup => +{};
-use DBIx::Skinny::Mixin modules => [qw(Pager)];
+use DBIx::Skinny::Mixin modules => [qw(Pager SearchWithPager)];
 
 my $table = 'mock_basic_mysql';
 sub setup_test_db {
