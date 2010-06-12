@@ -6,6 +6,7 @@ use UNIVERSAL::require;
 sub register_method {
     +{
         'resultset_with_pager' => \&resultset_with_pager,
+        'search_with_pager' => \&search_with_pager,
     },
 }
 
@@ -17,6 +18,19 @@ sub resultset_with_pager {
         or die $@;
     $args->{skinny} = $class;
     $logic_class->new($args);
+}
+
+sub search_with_pager {
+    my ($class, $where_cnd, $option_cnd, ) = @_;
+    my $pager_logic = delete $option_cnd->{pager_logic};
+    my $page = delete $option_cnd->{page};
+    my $rs = $class->search_rs($where_cnd, $option_cnd);
+    my $logic_class = "DBIx::Skinny::Pager::Logic::$pager_logic";
+    $logic_class->require
+        or die $@;
+    bless $rs, $logic_class; # rebless resultset.
+    $rs->page($page) if $page;
+    $rs->retrieve();
 }
 
 1;
@@ -37,6 +51,10 @@ DBIx::Skinny::Mixin::Pager
 
   my $rs = Proj::DB->resultset_with_pager('MySQLFoundRows');
   # $rs is DBIx::Skinny::Pager::Logic::MySQLFoundRows
+
+or
+
+  my ($iter, $pager) = Proj::DB->search_with_pager({ foo => "bar" }, { pager_logic => "PlusOne" });
 
 =head1 DESCRIPTION
 
