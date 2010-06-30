@@ -2,20 +2,20 @@ use strict;
 use warnings;
 use Test::More;
 use lib 't';
-use Mock::BasicMySQL;
+use Mock::Basic;
 
     for my $logic ( qw(MySQLFoundRows PlusOne Count) ) {
         subtest $logic => sub {
             my $skinny;
             my ($dsn, $username, $password) = @ENV{map { "SKINNY_MYSQL_${_}" } qw/DSN USER PASS/};
             if ( $dsn && $username ) {
-                $skinny = Mock::BasicMySQL->new({ dsn => $dsn, username => $username, password => $password });
+                $skinny = Mock::Basic->new({ dsn => $dsn, username => $username, password => $password });
                 $skinny->setup_test_db;
             } else {
                 if ( $logic eq "MySQLFoundRows" ) {
                     plan skip_all => 'Set $ENV{SKINNY_MYSQL_DSN}, _USER and _PASS to run this test', 1 unless ($dsn && $username);
                 } else {
-                    $skinny = Mock::BasicMySQL->new({ dsn => "dbi:SQLite:" });
+                    $skinny = Mock::Basic->new({ dsn => "dbi:SQLite:" });
                     $skinny->setup_test_db;
                 }
             }
@@ -26,7 +26,7 @@ use Mock::BasicMySQL;
                 push @insert_data, +{ id => $counter + 1, name => $counter };
                 $counter++;
             }
-            $skinny->bulk_insert('mock_basic_mysql', \@insert_data);
+            $skinny->bulk_insert('mock_basic', \@insert_data);
 
             subtest "normal case" => sub {
                 my $rs = $skinny->resultset_with_pager($logic, {
@@ -34,7 +34,7 @@ use Mock::BasicMySQL;
                     limit => 10,
                 });
                 isa_ok($rs, "DBIx::Skinny::Pager::Logic::$logic");
-                $rs->from(['mock_basic_mysql']);
+                $rs->from(['mock_basic']);
                 $rs->select(['name']);
                 my ($iter, $pager) = $rs->retrieve;
 
@@ -56,13 +56,12 @@ use Mock::BasicMySQL;
             };
 
             subtest 'with where' => sub {
-                is($skinny->count('mock_basic_mysql'), 15);
                 my $rs = $skinny->resultset_with_pager($logic, {
                     page => 4,
                     limit => 3,
                 });
                 isa_ok($rs, "DBIx::Skinny::Pager::Logic::$logic");
-                $rs->from(['mock_basic_mysql']);
+                $rs->from(['mock_basic']);
                 $rs->add_where(name => { '<' => 10 });
                 $rs->select(['name']);
                 my ($iter, $pager) = $rs->retrieve;
@@ -90,7 +89,7 @@ use Mock::BasicMySQL;
                     limit => 10,
                 });
                 isa_ok($rs, "DBIx::Skinny::Pager::Logic::$logic");
-                $rs->from(['mock_basic_mysql']);
+                $rs->from(['mock_basic']);
                 $rs->group({ column => 'id' });
                 $rs->select(['name']);
                 my ($iter, $pager) = $rs->retrieve;
@@ -117,7 +116,7 @@ use Mock::BasicMySQL;
                     page => 1,
                     limit => 10,
                 });
-                $rs->from(['mock_basic_mysql']);
+                $rs->from(['mock_basic']);
                 $rs->group({ column => 'id' });
                 $rs->select(['name']);
                 my $resultset = $rs->retrieve;
@@ -133,7 +132,7 @@ use Mock::BasicMySQL;
                     page => 'aiueo',
                     limit => 10,
                 });
-                $rs->from(['mock_basic_mysql']);
+                $rs->from(['mock_basic']);
                 $rs->group({ column => 'id' });
                 $rs->select(['name']);
                 my $resultset = $rs->retrieve;

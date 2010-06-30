@@ -1,8 +1,8 @@
-package Mock::BasicMySQL;
+package Mock::Basic;
 use DBIx::Skinny setup => +{};
 use DBIx::Skinny::Mixin modules => [qw(Pager SearchWithPager)];
 
-my $table = 'mock_basic_mysql';
+my $table = 'mock_basic';
 sub setup_test_db {
     my $self = shift;
     if ( $self->dbd->isa("DBIx::Skinny::DBD::MySQL") ) {
