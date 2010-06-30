@@ -16,6 +16,7 @@ requires 'DBIx::Skinny', 0.0712;
 requires 'Data::Page';
 requires 'Carp';
 
+build_requires 'Test::More';
 build_requires 'Test::LoadAllModules';
 build_requires 'Test::Deep';
 build_requires 'Test::Differences';
