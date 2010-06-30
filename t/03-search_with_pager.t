@@ -4,25 +4,30 @@ use Test::More;
 use lib 't';
 use Mock::BasicMySQL;
 
-
-my ($dsn, $username, $password) = @ENV{map { "SKINNY_MYSQL_${_}" } qw/DSN USER PASS/};
-
-plan skip_all => 'Set $ENV{SKINNY_MYSQL_DSN}, _USER and _PASS to run this test', 1 unless ($dsn && $username);
-
-my $skinny = Mock::BasicMySQL->new({ dsn => $dsn, username => $username, password => $password });
-$skinny->setup_test_db;
-
-my @insert_data;
-my $total_record = 15;
-my $counter = 0;
-while ( $counter < $total_record) {
-    push @insert_data, +{ name => $counter };
-    $counter++;
-}
-$skinny->bulk_insert('mock_basic_mysql', \@insert_data);
-
 for my $logic ( qw/ MySQLFoundRows PlusOne Count / ) {
     subtest $logic => sub {
+        my $skinny;
+        my ($dsn, $username, $password) = @ENV{map { "SKINNY_MYSQL_${_}" } qw/DSN USER PASS/};
+        if ( $dsn && $username ) {
+            $skinny = Mock::BasicMySQL->new({ dsn => $dsn, username => $username, password => $password });
+            $skinny->setup_test_db;
+        } else {
+            if ( $logic eq "MySQLFoundRows" ) {
+                plan skip_all => 'Set $ENV{SKINNY_MYSQL_DSN}, _USER and _PASS to run this test', 1 unless ($dsn && $username);
+            } else {
+                $skinny = Mock::BasicMySQL->new({ dsn => "dbi:SQLite:" });
+                $skinny->setup_test_db;
+            }
+        }
+        my @insert_data;
+        my $total_record = 15;
+        my $counter = 0;
+        while ( $counter < $total_record) {
+            push @insert_data, +{ name => $counter };
+            $counter++;
+        }
+        $skinny->bulk_insert('mock_basic_mysql', \@insert_data);
+
         my ($iter, $pager) = $skinny->search_with_pager(mock_basic_mysql => {
             name => { '<' => 20 },
         }, {
@@ -41,15 +46,10 @@ for my $logic ( qw/ MySQLFoundRows PlusOne Count / ) {
         is($iter->count, 5, "iter should have 5 items");
 
         done_testing;
+        $skinny->cleanup_test_db;
+
     };
 }
-
-if ( $skinny->profiler ) {
-    require Data::Dumper;
-    warn Data::Dumper::Dumper($skinny->profiler)
-}
-
-$skinny->cleanup_test_db;
 
 done_testing;
 
