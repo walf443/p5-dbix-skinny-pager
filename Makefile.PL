@@ -20,6 +20,7 @@ build_requires 'Test::More';
 build_requires 'Test::LoadAllModules';
 build_requires 'Test::Deep';
 build_requires 'Test::Differences';
+build_requires 'Test::Requires';
 build_requires 'Module::Install::ReadmeFromPod';
 build_requires 'Module::Install::Repository';
 use_test_base;

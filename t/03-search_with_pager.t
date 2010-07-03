@@ -3,6 +3,9 @@ use warnings;
 use Test::More;
 use lib 't';
 use Mock::Basic;
+use Test::Requires {
+    'DBD::SQLite' => undef,
+};
 
 for my $logic ( qw/ MySQLFoundRows PlusOne Count / ) {
     subtest $logic => sub {
