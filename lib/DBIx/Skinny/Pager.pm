@@ -3,7 +3,7 @@ package DBIx::Skinny::Pager;
 use strict;
 use warnings;
 use base 'DBIx::Skinny::SQL';
-use DBIx::Skinny::Pager::Page;
+use DBIx::Skinny::Pager::Page::Default;
 use DBIx::Skinny::Pager::ResultSet;
 
 our $VERSION = '0.07';
@@ -15,7 +15,7 @@ sub get_total_entries {
 }
 
 sub pager_class {
-    "DBIx::Skinny::Pager::Page";
+    "DBIx::Skinny::Pager::Page::Default";
 }
 
 sub retrieve {
