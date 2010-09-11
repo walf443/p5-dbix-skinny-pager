@@ -6,7 +6,7 @@ use base 'DBIx::Skinny::SQL';
 use DBIx::Skinny::Pager::Page::Default;
 use DBIx::Skinny::Pager::ResultSet;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 __PACKAGE__->mk_accessors(qw(page));
 
