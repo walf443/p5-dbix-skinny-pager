@@ -2,6 +2,9 @@ package DBIx::Skinny::Mixin::Pager;
 use strict;
 use warnings;
 use UNIVERSAL::require;
+use DBIx::Skinny::Pager::Logic::Count;
+use DBIx::Skinny::Pager::Logic::MySQLFoundRows;
+use DBIx::Skinny::Pager::Logic::PlusOne;
 
 sub register_method {
     +{
