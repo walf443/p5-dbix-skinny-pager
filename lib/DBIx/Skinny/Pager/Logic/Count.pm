@@ -8,7 +8,7 @@ use DBIx::Skinny::SQL;
 sub get_total_entries {
     my ($self, $iter) = @_;
     my %hash = %{ $self };
-    for my $col ( qw( limit offset page select ) ) {
+    for my $col ( qw( limit offset page select order ) ) {
         delete $hash{$col};
     }
     my $rs = DBIx::Skinny::SQL->new(\%hash);
