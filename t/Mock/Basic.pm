@@ -1,5 +1,5 @@
 package Mock::Basic;
-use DBIx::Skinny setup => +{};
+use DBIx::Skinny connect_info => +{};
 use DBIx::Skinny::Mixin modules => [qw(Pager SearchWithPager)];
 
 my $table = 'mock_basic';

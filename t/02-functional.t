@@ -131,6 +131,7 @@ use Test::Requires {
             };
 
             subtest 'with page to string' => sub {
+                local $SIG{__WARN__} = sub {}; # XXX: What you want to do is not understood. 
                 my $rs = $skinny->resultset_with_pager($logic, {
                     page => 'aiueo',
                     limit => 10,
