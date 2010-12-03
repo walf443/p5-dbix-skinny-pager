@@ -23,7 +23,6 @@ build_requires 'Test::Differences';
 build_requires 'Test::Requires';
 build_requires 'Module::Install::ReadmeFromPod';
 build_requires 'Module::Install::Repository';
-use_test_base;
 
 auto_include;
 auto_set_repository;
