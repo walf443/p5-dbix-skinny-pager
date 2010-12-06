@@ -43,8 +43,7 @@ AUTHOR
     Keiji Yoshimi <walf443 at gmail dot com>
 
 SEE ALSO
-    +<DBIx::Skinny>, +<DBIx::Skinny::SQL>, +<DBIx::Skinny::Mixin>,
-    +<Data::Page>
+    DBIx::Skinny, DBIx::Skinny::SQL, DBIx::Skinny::Mixin, Data::Page
 
 LICENSE
     This library is free software; you can redistribute it and/or modify it

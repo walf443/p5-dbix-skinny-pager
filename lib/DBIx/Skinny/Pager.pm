@@ -94,7 +94,7 @@ Keiji Yoshimi E<lt>walf443 at gmail dot comE<gt>
 
 =head1 SEE ALSO
 
-+<DBIx::Skinny>, +<DBIx::Skinny::SQL>, +<DBIx::Skinny::Mixin>, +<Data::Page>
+L<DBIx::Skinny>, L<DBIx::Skinny::SQL>, L<DBIx::Skinny::Mixin>, L<Data::Page>
 
 =head1 LICENSE
 

@@ -56,7 +56,7 @@ Keiji Yoshimi E<lt>walf443 at gmail dot comE<gt>
 
 =head1 SEE ALSO
 
-+<DBIx::Skinny::Pager>
+L<DBIx::Skinny::Pager>
 
 =head1 LICENSE
 
