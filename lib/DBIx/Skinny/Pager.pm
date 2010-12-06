@@ -7,7 +7,7 @@ use DBIx::Skinny::Pager::Page::Default;
 use DBIx::Skinny::Pager::ResultSet;
 use Class::Accessor::Lite;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 Class::Accessor::Lite->mk_accessors(qw/page/);
 

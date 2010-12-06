@@ -1,5 +1,8 @@
 Revision history for Perl extension DBIx::Skinny::Pager
 
+0.10    Mon Dec  6 22:52:47 JST 2010
+        - follow DBIx::Skinny 0.0729
+        - fixed pod.
 0.09    Fri Nov 12 07:48:40 JST 2010
         - Logic::Count: remove order by statement when count query for PostgreSQL.
 0.08    Sat Sep 11 22:16:15 JST 2010
