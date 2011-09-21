@@ -23,6 +23,5 @@ test_requires 'Test::Requires';
 build_requires 'Module::Install::ReadmeFromPod';
 build_requires 'Module::Install::Repository';
 
-auto_include;
 auto_set_repository;
 WriteAll;
