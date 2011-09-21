@@ -15,11 +15,11 @@ requires 'Data::Page';
 requires 'Carp';
 requires 'Class::Accessor::Lite';
 
-build_requires 'Test::More';
-build_requires 'Test::LoadAllModules';
-build_requires 'Test::Deep';
-build_requires 'Test::Differences';
-build_requires 'Test::Requires';
+test_requires 'Test::More';
+test_requires 'Test::LoadAllModules';
+test_requires 'Test::Deep';
+test_requires 'Test::Differences';
+test_requires 'Test::Requires';
 build_requires 'Module::Install::ReadmeFromPod';
 build_requires 'Module::Install::Repository';
 
