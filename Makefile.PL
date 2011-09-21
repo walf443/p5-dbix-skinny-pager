@@ -16,7 +16,7 @@ requires 'Carp';
 requires 'Class::Accessor::Lite';
 
 test_requires 'Test::More';
-test_requires 'Test::LoadAllModules';
+test_requires 'Test::UseAllModules';
 test_requires 'Test::Deep';
 test_requires 'Test::Differences';
 test_requires 'Test::Requires';
