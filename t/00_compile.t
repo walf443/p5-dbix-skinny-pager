@@ -1,9 +1,6 @@
 use strict;
-use Test::LoadAllModules;
+use Test::UseAllModules;
 
 BEGIN {
-    all_uses_ok(
-        search_path => 'DBIx::Skinny',
-        except => [],
-    );
+    all_uses_ok();
 }
